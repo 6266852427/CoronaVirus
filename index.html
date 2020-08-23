@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Corona Virus Update</title>
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+ <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+ <style>
+   body{
+    background: black;
+    color: white;
+  }
+  table, tr, td{
+    color: white;
+  }
+</style>
+</head>
+<body>
+  <table class="table table-borderless text-center">
+
+    <tr>
+      <h1 class="text-center text-white bg-danger p-3 font-weight-bolder">Corona Virus Data</h1>
+      <td colspan="2"><h2>Global Data</h2><p>Updated at : <span id="date-wise"></span></p></td>
+    </tr>
+    <tbody class="bg-info" id="global-wise"></tbody>
+  </table>
+  <br>
+  <table class="table table-striped">
+    <tr class="text-center">
+      <td colspan="8"><h2>India Data</h2></td>
+    </tr>
+    <tr>
+      <th class="text-center">S.No.</th>
+      <th class="text-center">Country</th>
+      <th class="text-center">New Confirmed</th>
+      <th class="text-center">New Deathes</th>
+      <th class="text-center">New Recoverd</th>
+      <th class="text-center">Total Confirmed</th>
+      <th class="text-center">Total Deaths</th>
+      <th class="text-center">Total Recovered</th>
+    </tr>
+    <tbody id="country-india"></tbody>
+  </table>
+
+  <br>
+  <table class="table table-striped">
+    <tr class="text-center">
+      <td colspan="8"><h2>Countries Data</h2></td>
+    </tr>
+    <tr>
+      <th class="text-center">S.No.</th>
+      <th class="text-center">Country</th>
+      <th class="text-center">New Confirmed</th>
+      <th class="text-center">New Deathes</th>
+      <th class="text-center">New Recoverd</th>
+      <th class="text-center">Total Confirmed</th>
+      <th class="text-center">Total Deaths</th>
+      <th class="text-center">Total Recovered</th>
+    </tr>
+    <tbody id="country-wise"></tbody>
+  </table>
+
+
+
+  <script type="text/javascript">
+    $.ajax({
+      url:"https://api.covid19api.com/summary",
+      type:"GET",
+      dataType:"JSON",
+      success:function(data){
+        $("#date-wise").html(data.Date);
+        $.each(data.Global, function(key, value){
+          $("#global-wise").append('<tr><td class="bg-success">' + key + '</td><td class="bg-secondary">' + value + '</td></tr>');
+        });
+/*
+         $.each(data.Countries['76'], function(india){
+          $("#country-india").append('<tr>'
+           +'<td class="table-default p-2 text-center">'+  +'</td>'
+           +'<td class="table-secondary p-2 text-center">'+india['Country']+'</td>'
+           +'<td class="table-success p-2 text-center">'+india['NewConfirmed']+'</td>'
+           +'<td class="table-danger p-2 text-center">'+india['NewDeaths']+'</td>'
+           +'<td class="table-warning p-2 text-center">'+india['NewRecovered']+'</td>'
+           +'<td class="table-info p-2 text-center">'+india['TotalConfirmed']+'</td>'
+           +'<td class="table-light p-2 text-center">'+india['TotalDeaths']+'</td>'
+           +'<td class="table-default p-2 text-center">'+india['TotalRecovered']+'</td>'
+           +'</tr>');
+        });*/
+
+        var sno = 1;
+        $.each(data.Countries, function(key, value){
+          $("#country-wise").append('<tr>'
+           +'<td class="table-default p-2 text-center">'+ sno +'</td>'
+           +'<td class="table-secondary p-2 text-center">'+value.Country+'</td>'
+           +'<td class="table-success p-2 text-center">'+value.NewConfirmed+'</td>'
+           +'<td class="table-danger p-2 text-center">'+value.NewDeaths+'</td>'
+           +'<td class="table-warning p-2 text-center">'+value.NewRecovered+'</td>'
+           +'<td class="table-info p-2 text-center">'+value.TotalConfirmed+'</td>'
+           +'<td class="table-light p-2 text-center">'+value.TotalDeaths+'</td>'
+           +'<td class="table-default p-2 text-center">'+value.TotalRecovered+'</td>'
+           +'</tr>');
+          sno++;
+        });
+      }
+    });  
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>    
+</body>
+</html>
